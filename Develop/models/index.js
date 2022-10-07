@@ -7,35 +7,35 @@ const Comment = require("./Comment");
 
 // User hasMany blog posts
 User.hasMany(Blogpost, {
-  foreignKey: "user_id",
-  onDelete: "CASCADE",
+  foreignKey: "user_id", // from Blogpost
+  //onDelete: "CASCADE",
 });
 
 // Blog posts belongsTo user
 Blogpost.belongsTo(User, {
-  foreignKey: "user_id",
+  foreignKey: "user_id", // from Blogpost
 });
 
 // User hasMany comments
 User.hasMany(Comment, {
-  foreignKey: "user_id",
-  onDelete: "CASCADE",
+  foreignKey: "user_id", // from Comment
+  //onDelete: "CASCADE",
 });
 
 // Comment belongsTo user
 Comment.belongsTo(User, {
-  foreignKey: "user_id",
+  foreignKey: "user_id", // from Comment
 });
 
 // Blogpost hasMany comments
 Blogpost.hasMany(Comment, {
-  foreignKey: "blog_post_id",
-  onDelete: "CASCADE",
+  foreignKey: "blogpost_id", // from Comment
+  //onDelete: "CASCADE",
 });
 
 // Comments belongsTo blogpost
 Comment.belongsTo(Blogpost, {
-  foreignKey: "user_id",
+  foreignKey: "user_id", // from Comment
 });
 
 module.exports = { User, Blogpost, Comment };
