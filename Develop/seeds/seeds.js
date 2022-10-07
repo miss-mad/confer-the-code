@@ -9,18 +9,19 @@ const seedUsers = require("./user-seeds");
 const sequelize = require("../config/connection");
 
 // Function expression to seed all 3 tables using async/await, then logging a message in the terminal once done
+// Must be in this order because otherwise will throw an error because certain foreign keys being referenced don't exist yet
 const seedAll = async () => {
   await sequelize.sync({ force: true });
   console.log("\n----- DATABASE SYNCED -----\n");
 
+  await seedUsers();
+  console.log("\n----- USERS SEEDED -----\n");
+  
   await seedBlogposts();
   console.log("\n----- BLOGPOSTS SEEDED -----\n");
 
   await seedComments();
   console.log("\n----- COMMENTS SEEDED -----\n");
-
-  await seedUsers();
-  console.log("\n----- USERS SEEDED -----\n");
 
   process.exit(0);
 };

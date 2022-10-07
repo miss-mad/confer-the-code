@@ -17,12 +17,12 @@ Blogpost.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    blog_post_name: {
+    blogpost_name: {
       // Default string character limit is 255
       type: DataTypes.STRING,
       allowNull: false,
     },
-    blog_post_description: {
+    blogpost_description: {
       // DataTypes is TEXT so that there is no limit
       type: DataTypes.TEXT,
       allowNull: false,
