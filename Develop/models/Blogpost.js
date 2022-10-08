@@ -27,13 +27,6 @@ Blogpost.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    date_created: {
-      // DATA DataType includes date and time
-      type: DataTypes.DATE,
-      allowNull: false,
-      isDate: true,
-      defaultValue: DataTypes.NOW,
-    },
     // Foreign Key reference
     // To tie the user to the blog post
     user_id: {
@@ -49,8 +42,8 @@ Blogpost.init(
 
     // Link to database connection
     sequelize,
-    // Set to false to remove `created_at` and `updated_at` fields
-    timestamps: false,
+    // Set to true to automatically create `created_at` and `updated_at` fields for blogpost timestamps
+    timestamps: true,
     // Prevent sequelize from renaming the table
     freezeTableName: true,
     // Sets the field option on all attributes to the snake_case version of its name
