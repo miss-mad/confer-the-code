@@ -7,9 +7,9 @@ const sequelize = require("../config/connection");
 
 // Create a new Sequelize model for User
 class User extends Model {
-    // check this bcrypt stuff
-  checkPassword(loginPw) {
-    return bcrypt.compareSync(loginPw, this.password);
+  // Bcrypt: adds method to the sequelize User model to check the hashed password
+  checkPassword(loginPassword) {
+    return bcrypt.compareSync(loginPassword, this.password);
   }
 }
 
@@ -40,8 +40,8 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        // Password length must be a minimum of 10 characters
-        len: [10],
+        // Password length must be a minimum of 9 characters
+        len: [9],
       },
     },
   },
