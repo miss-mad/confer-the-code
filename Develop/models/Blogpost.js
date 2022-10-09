@@ -27,6 +27,11 @@ Blogpost.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
     // Foreign Key reference
     // To tie the user to the blog post
     user_id: {
