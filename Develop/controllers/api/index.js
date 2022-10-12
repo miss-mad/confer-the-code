@@ -22,6 +22,7 @@
 // get all users
 // get all comments
 
+// This index.js directs the computer to know which API routes to find in which folders (like a store greeter or a phone operator)
 const router = require("express").Router();
 const blogpostRoutes = require("./blogpost-routes");
 const commentRoutes = require("./comment-routes");

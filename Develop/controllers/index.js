@@ -1,3 +1,4 @@
+// This index.js directs the computer to know where to look for which routes: API or home
 const router = require('express').Router();
 
 const apiRoutes = require('./api');
