@@ -52,7 +52,12 @@ router.post("/", (req, res) => {
     "user_id": 2
 }
     */
-  Comment.create(req.body)
+
+  const user_id = req.session.user_id;
+
+  const payload = { ...req.body, user_id };
+
+  Comment.create(payload)
     .then((newComment) => {
       res.status(200).json(newComment);
     })
@@ -73,9 +78,7 @@ router.put("/:id", (req, res) => {
     "user_id": 2
 }
     */
-  Comment.update(
-    { where: { id: req.params.id } }
-  )
+  Comment.update({ where: { id: req.params.id } })
     .then((updatedComment) => {
       res.status(200).json(updatedComment);
     })
