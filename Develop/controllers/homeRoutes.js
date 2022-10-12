@@ -2,6 +2,8 @@ const router = require("express").Router();
 const { Blogpost, User, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
+// Each home route corresponds with a handlebars file
+
 // Homepage shows all the blogposts and all of the blogposts' comments
 // Blogpost page shows existing blogposts (by blogpost id)
 // Dashboard shows only the user's blogposts and those blogposts' comments
@@ -17,13 +19,14 @@ router.get("/", async (req, res) => {
           model: User,
           attributes: ["username"],
         },
+        {model: Comment}
       ],
     });
-
     // Serialize data so the template can read it
     const blogposts = blogpostData.map((blogpost) =>
       blogpost.get({ plain: true })
     );
+    
 
     // Pass serialized data and session flag into template
     res.render("homepage", {
@@ -50,7 +53,33 @@ router.get("/blogpost/:id", async (req, res) => {
 
     const blogpost = blogpostData.get({ plain: true });
 
+    console.log(blogpost)
+
     res.render("blogpost", {
+      ...blogpost,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/blogpost/edit/:id", async (req, res) => {
+  try {
+    const blogpostData = await Blogpost.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["username"],
+        },
+      ],
+    });
+
+    const blogpost = blogpostData.get({ plain: true });
+
+    console.log(blogpost)
+
+    res.render("edit", {
       ...blogpost,
       logged_in: req.session.logged_in,
     });
@@ -61,27 +90,37 @@ router.get("/blogpost/:id", async (req, res) => {
 
 // Dashboard - shows only the user's blogposts and those blogposts' comments
 // Find all blogposts by user
-// Use withAuth middleware to prevent access to route
+// Use withAuth middleware to prevent access to route if user is not logged in
 router.get("/dashboard", withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    const blogpostData = await Blogpost.findAll(
-      { where: { product_id: req.params.id } },
-      {
-        include: [
-          { model: Comment },
-          { model: User, attributes: ["username"] },
-        ],
-      }
-    );
+    // const blogpostData = await Blogpost.findAll(
+    //   { where: { user_id: req.session.user_id } },
+    //   {
+    //     include: [{ model: Comment }, {model: User}],
+    //   }
+    // );
+    const blogpostData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ["password"] },
+      include: [
+        { model: Comment, attributes: ["content"] },
+        {
+          model: Blogpost,
+        },
+      ],
+    });
+    
+    let tempblogpostData = blogpostData.get({plain: true})
+    
+        console.log("blogpostData: ", tempblogpostData)
 
-    const blogpost = blogpostData.get({ plain: true });
-
+    // console.log("blogpostData", blogpostData);
     res.render("dashboard", {
-      ...blogpost,
+      ...tempblogpostData,
       logged_in: true,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
