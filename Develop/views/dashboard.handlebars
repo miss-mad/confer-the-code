@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-auto">
+    <h2>Dashboard page: Welcome {{username}}!</h2>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <h3>Create a New Blogpost:</h3>
+
+    <form class="form new-blogpost-form">
+      <div class="form-group">
+        <label for="blogpost-name">blogpost name:</label>
+        <input
+          class="form-input"
+          type="text"
+          id="blogpost-name"
+          name="blogpost-name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="blogpost-desc">description:</label>
+        <textarea
+          class="form-input"
+          id="blogpost-desc"
+          name="blogpost-desc"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary create-blogpost">Create</button>
+      </div>
+    </form>
+  </div>
+
+  {{#if blogposts.length}}
+    <div class="col-md-6 blogpost-list">
+      <h3>Current Blogposts:</h3>
+
+      {{#each blogposts as |blogpost|}}
+        <div class="row mb-2">
+          <div class="col-md-8">
+            <h4><a href="/blogpost/{{blogpost.id}}">{{blogpost.blogpost_name}}</a></h4>
+          </div>
+          <div class="col-md-2">
+            <button
+              class="btn btn-sm btn-primary delete-blogpost"
+              data-id="{{blogpost.id}}"
+            ><a style="color:white" href="/blogpost/edit/{{blogpost.id}}">EDIT</a></button>
+          </div>
+          <div class="col-md-2">
+            <button
+              class="btn btn-sm btn-danger delete-blogpost"
+              data-id="{{blogpost.id}}"
+            >DELETE</button>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>
+
+<script src="/js/dashboard.js"></script>
