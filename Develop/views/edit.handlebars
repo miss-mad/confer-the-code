@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-auto">
+    <h2 id="user_id" data-blogpost-id={{id}} data-user-id={{user_id}}>Edit page: Welcome {{username}}!</h2>
+   
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <h3>Edit Blogpost:</h3>
+
+    <form class="form new-blogpost-form">
+      <div class="form-group">
+        <label for="blogpost-name">blogpost name:</label>
+        <input
+          class="form-input"
+          type="text"
+          id="blogpost-name"
+          name="blogpost-name"
+          placeholder={{blogpost_name}}
+        />
+      </div>
+      <div class="form-group">
+        <label for="blogpost-desc">description:</label>
+        <textarea
+          class="form-input"
+          id="blogpost-desc"
+          name="blogpost-desc"
+          placeholder={{blogpost_description}}
+
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary update-blogpost">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/editBlogpost.js"></script>
