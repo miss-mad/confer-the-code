@@ -1,3 +1,4 @@
+// Function to handle when a user logs out
 const logout = async () => {
   const response = await fetch("/api/users/logout", {
     method: "POST",
@@ -12,4 +13,5 @@ const logout = async () => {
   }
 };
 
+// Click listener to fire the logout() function once the Logout button is clicked on main.handlebars
 document.querySelector("#logout").addEventListener("click", logout);
