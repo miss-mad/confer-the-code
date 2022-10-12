@@ -17,6 +17,11 @@ Blogpost.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
     blogpost_name: {
       // Default string character limit is 255
       type: DataTypes.STRING,
@@ -26,11 +31,6 @@ Blogpost.init(
       // DataTypes is TEXT so that there is no limit
       type: DataTypes.TEXT,
       allowNull: false,
-    },
-    date_created: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
     },
     // Foreign Key reference
     // To tie the user to the blog post
@@ -43,8 +43,6 @@ Blogpost.init(
     },
   },
   {
-    // HOOKS HERE?
-
     // Link to database connection
     sequelize,
     // Set to true to automatically create `created_at` and `updated_at` fields for blogpost timestamps

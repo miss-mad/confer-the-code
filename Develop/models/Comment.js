@@ -18,7 +18,7 @@ Comment.init(
       autoIncrement: true,
     },
     content: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     // Foreign Key reference
@@ -41,8 +41,6 @@ Comment.init(
     },
   },
   {
-    // HOOKS HERE?
-
     // Link to database connection
     sequelize,
     // Set to false to remove `created_at` and `updated_at` fields
