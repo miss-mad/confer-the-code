@@ -53,7 +53,11 @@ router.post("/", (req, res) => {
     */
   User.create(req.body)
     .then((newUser) => {
-      res.status(200).json(newUser);
+      req.session.save(() => {
+        req.session.user_id = newUser.id;
+        req.session.logged_in = true;
+        res.status(200).json(newUser);
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -105,5 +109,62 @@ router.post("/", (req, res) => {
 //     })
 //     .catch((err) => res.json(err));
 // });
+
+// Need login route
+router.post("/login", async (req, res) => {
+  /* req.body should look like this...
+    {
+      "username": "user6",
+      "password": "password6"
+    }
+    */
+
+  try {
+    let userData = await User.findOne({
+      where: { username: req.body.username },
+    });
+    // If statement to check if the user inputted a username
+    if (!userData) {
+      res
+        .status(400)
+        .json({ message: "No valid username or password. Try again" });
+      return;
+    }
+    console.log("userData", userData)
+
+    // If statement to check if the password fits the criteria outlined in the User model of being at least 9 characters
+    const validPassword = userData.checkPassword(req.body.password);
+    // console.log("validPassword", validPassword)
+    if (!validPassword) {
+      res.status(400).json({ message: "Not a valid password. Try again" });
+      return;
+    }
+
+    // Save the login info
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+      res
+        .status(200)
+        .json({ user: userData, message: "You are now logged in!" });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
+// Need logout route
+router.post("/logout", (req, res) => {
+  if (req.session.logged_in) {
+    // .destroy is an express-session method that means the session will be destroyed when the response ends
+    req.session.destroy(() => {
+      // .end is an express method that ends the response process
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
 
 module.exports = router;
