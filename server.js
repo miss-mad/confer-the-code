@@ -28,7 +28,7 @@ const sess = {
   secret: "secret here",
   // Session ID cookie with the following 3 options set
   cookie: {
-    // maxAge: 1000 * 60 * 10, // log out after 10 minutes in milliseconds
+    maxAge: 1000 * 60 * 10, // log out after 10 minutes in milliseconds
     // "httpOnly" is boolean. When truthy, the HttpOnly attribute is set, otherwise it is not. By default, the HttpOnly attribute is set.
     httpOnly: true,
     // "secure" is boolean. When truthy, the Secure attribute is set, otherwise it is not. By default, the Secure attribute is not set.
